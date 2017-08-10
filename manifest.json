@@ -1,0 +1,23 @@
+{
+
+  "manifest_version": 2,
+  "name": "Whitenoisefy",
+  "version": "1.0",
+
+  "description": "White noise for you!.",
+
+  "icons": {
+    "48": "icons/icon.svg"
+  },
+
+ "permissions": [
+    "activeTab"
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/icon.svg",
+    "default_title": "Whitenoisefy",
+    "default_popup": "popup/index.html"
+  }
+
+}
