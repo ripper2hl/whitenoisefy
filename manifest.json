@@ -7,9 +7,17 @@
   "description": "White noise for you!.",
 
   "icons": {
-    "48": "icons/icon.png"
+    "16": "icons/icon-16.png",
+    "22": "icons/icon-22.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "64": "icons/icon-64.png",
+    "128": "icons/icon-128.png",
+    "256": "icons/icon-256.png",
+    "512": "icons/icon-512.png",
+    "1024": "icons/icon.png"
   },
-
+  
  "permissions": [
     "activeTab"
   ],
