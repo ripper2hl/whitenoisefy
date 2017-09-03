@@ -17,7 +17,7 @@
     "512": "icons/icon-512.png",
     "1024": "icons/icon.png"
   },
-  
+
  "permissions": [
     "activeTab"
   ],
@@ -30,6 +30,24 @@
     "default_icon": "icons/icon.png",
     "default_title": "Whitenoisefy",
     "default_popup": "popup/index.html"
-  }
+  },
+  "commands": {
+    "play-white-noise": {
+      "suggested_key": { "default": "Alt+W" },
+      "description": "Play white noise"
+    },
+    "play-pink-noise": {
+      "suggested_key": { "default": "Alt+P" },
+      "description": "Play pink noise"
+    },
+    "play-brown-noise": {
+      "suggested_key": { "default": "Alt+B" },
+      "description": "Play brown noise"
+    },
+    "stop-noise": {
+      "suggested_key": { "default": "Alt+S" },
+      "description": "Stop noise"
+    }
+}
 
 }
