@@ -1,12 +1,32 @@
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
-  </head>
-
-  <body>
-    <button class="button play">play</button>
-    <button class="button stop">stop</button>
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card mt-3 mb-3 text-center" style="width: 20rem;">
+            <div class="card-body">
+                <h4 class="card-title">Play white noise</h4>
+                <p class="card-text">
+                  Or use pink and brown noise!
+                </p>
+                <button class="button play btn btn-outline-primary btn-block">white noise</button>
+                <button class="button play btn btn-outline-danger btn-block">pink noise</button>
+                <button class="button play btn btn-outline-dark btn-block">brown noise</button>
+                <button class="button play btn btn-secondary btn-block">stop</button>
+            </div>
+            <div class="card-footer text-muted">
+              <p>
+                Give me an <a class="github-button" href="https://github.com/ripper2hl/whitenoisefy" >Star</a> on github!
+              </p>
+              <p>
+                Rate me on <a href="https://addons.mozilla.org/es/firefox/addon/whitenoisefy/">Mozilla Addons</a>
+              </p>
+            </div>
+        </div>
+    </div>
     <script src="whiteNoiseController.js"></script>
-  </body>
+</body>
 
 </html>
