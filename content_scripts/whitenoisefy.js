@@ -1,15 +1,16 @@
 (() => {
     'use strict';
+    const BUFFER_SIZE = 8192;
     const noises = [{
-            name: 'white noise',
+            name: 'White',
             control: createWhiteNoise()
         },
         {
-            name: 'pink noise',
+            name: 'Pink',
             control: createPinkNoise()
         },
         {
-            name: 'brown noise',
+            name: 'Brown',
             control: createBrownNoise()
         }
     ];
@@ -28,7 +29,7 @@
     function createWhiteNoise(bufferSize) {
         let control = {};
         let audioContext = new window.AudioContext();
-        bufferSize = bufferSize || 4096;
+        bufferSize = bufferSize || BUFFER_SIZE;
         let node = audioContext.createScriptProcessor(bufferSize, 1, 1);
         node.onaudioprocess = function(e) {
             var output = e.outputBuffer.getChannelData(0);
@@ -45,7 +46,7 @@
     function createPinkNoise(bufferSize) {
         let control = {};
         let audioContext = new window.AudioContext();
-        bufferSize = bufferSize || 4096;
+        bufferSize = bufferSize || BUFFER_SIZE;
         var b0, b1, b2, b3, b4, b5, b6;
         b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
         let node = audioContext.createScriptProcessor(bufferSize, 1, 1);
@@ -72,7 +73,7 @@
     function createBrownNoise(bufferSize) {
         let control = {};
         let audioContext = new window.AudioContext();
-        bufferSize = bufferSize || 4096;
+        bufferSize = bufferSize || BUFFER_SIZE;
         let lastOut = 0.0;
         let node = audioContext.createScriptProcessor(bufferSize, 1, 1);
         node.onaudioprocess = function(e) {
@@ -112,11 +113,11 @@
      */
     browser.commands.onCommand.addListener((command) => {
         if (command === 'play-white-noise') {
-            play('white noise');
+            play('White');
         } else if (command === 'play-pink-noise') {
-            play('pink noise');
+            play('Pink');
         } else if (command === 'play-brown-noise') {
-            play('brown noise');
+            play('Brown');
         } else {
             stop();
         }
