@@ -1,4 +1,4 @@
-(() => {
+((browser) => {
     'use strict';
     const BUFFER_SIZE = 8192;
     const noises = [{
@@ -23,8 +23,8 @@
         }
     }
 
-
     browser.runtime.onMessage.addListener(whitenoisefy);
+
 
     function createWhiteNoise(bufferSize) {
         let control = {};
@@ -123,4 +123,4 @@
         }
     });
 
-})();
+})(window.browser|| window.chrome);
