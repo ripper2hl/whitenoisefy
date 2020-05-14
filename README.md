@@ -1,5 +1,10 @@
 # ![Whitenoisefy](icons/icon-48.png) Whitenoisefy
 
+## Descargar e instalar en: 
+
+* [Mozilla Firefox](https://addons.mozilla.org/es/firefox/addon/whitenoisefy/)
+* [Google Chrome](https://chrome.google.com/webstore/detail/whitenoisefy/ajhngnoepmkjnglolfehdoihcoljpjhg?hl=es)
+
 Es un generador de ruido blanco, se describe como una señal de sonido que contiene todas las frecuencias y estas son de la misma potencia y se dice podría tener los siguientes beneficios:
 
 - Aumenta el enfoque mientras mejora la privacidad
