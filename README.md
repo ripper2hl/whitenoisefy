@@ -2,8 +2,8 @@
 
 ## Descargar e instalar en: 
 
-* [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/whitenoisefy/?src=ss)
-* [Google Chrome](https://chrome.google.com/webstore/detail/whitenoisefy/ajhngnoepmkjnglolfehdoihcoljpjhg?hl=es)
+* [Mozilla Firefox](https://addons.mozilla.org/firefox/addon/whitenoisefy/?src=ss)
+* [Google Chrome](https://chrome.google.com/webstore/detail/whitenoisefy/ajhngnoepmkjnglolfehdoihcoljpjhg)
 
 Es un generador de ruido blanco, se describe como una señal de sonido que contiene todas las frecuencias y estas son de la misma potencia y se dice podría tener los siguientes beneficios:
 
