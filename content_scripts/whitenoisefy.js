@@ -1,37 +1,37 @@
 ((browser) => {
     'use strict';
+
     const BUFFER_SIZE = 8192;
-    const noises = [{
-            name: 'white',
-            control: createNoiseGenerator('white')
-        },
-        {
-            name: 'pink',
-            control: createNoiseGenerator('pink')
-        },
-        {
-            name: 'brown',
-            control: createNoiseGenerator('brown')
-        }
+    const VOLUME_STEP = 0.1; // Ajusta según tus necesidades
+    let globalVolume = 1.0; // Volumen global
+
+    const noises = [
+        { name: 'white', control: createNoiseGenerator('white') },
+        { name: 'pink', control: createNoiseGenerator('pink') },
+        { name: 'brown', control: createNoiseGenerator('brown') }
     ];
 
     function whitenoisefy(request, sender, sendResponse) {
         if (request.action === 'stop') {
             stop();
+        } else if (request.action === 'volumeUp') {
+            volumeUp();
+        } else if (request.action === 'volumeDown') {
+            volumeDown();
         } else {
             play(request.action);
         }
     }
 
     browser.runtime.onMessage.addListener(whitenoisefy);
-    
+
     function createNoiseGenerator(type, bufferSize = 8192) {
         let control = {};
         let audioContext = new window.AudioContext();
         let node = audioContext.createScriptProcessor(bufferSize, 1, 1);
-    
+
         let noiseFunction;
-    
+
         if (type === 'white') {
             noiseFunction = createWhiteNoiseGenerator();
         } else if (type === 'pink') {
@@ -39,17 +39,17 @@
         } else if (type === 'brown') {
             noiseFunction = createBrownNoiseGenerator();
         }
-    
+
         node.onaudioprocess = function (e) {
             const output = e.outputBuffer.getChannelData(0);
             for (let i = 0; i < bufferSize; i++) {
-                output[i] = noiseFunction();
+                output[i] = noiseFunction() * globalVolume;
             }
         };
-    
+
         control.play = () => node.connect(audioContext.destination);
         control.stop = () => node.disconnect();
-    
+
         return control;
     }
 
@@ -58,11 +58,11 @@
             return Math.random() * 2 - 1;
         };
     }
-    
+
     function createPinkNoiseGenerator() {
         let b0, b1, b2, b3, b4, b5, b6;
         b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
-    
+
         return function () {
             const white = Math.random() * 2 - 1;
             b0 = 0.99886 * b0 + white * 0.0555179;
@@ -76,10 +76,10 @@
             return pinkValue * 0.11; // (roughly) compensate for gain
         };
     }
-    
+
     function createBrownNoiseGenerator() {
         let lastOut = 0.0;
-    
+
         return function () {
             const white = Math.random() * 2 - 1;
             const brownValue = (lastOut + (0.02 * white)) / 1.02;
@@ -87,7 +87,14 @@
             return brownValue * 3.5; // (roughly) compensate for gain
         };
     }
-    
+
+    function volumeUp() {
+        globalVolume = Math.min(1.0, globalVolume + VOLUME_STEP);
+    }
+
+    function volumeDown() {
+        globalVolume = Math.max(0.0, globalVolume - VOLUME_STEP);
+    }
 
     function play(nameSound) {
         let soundSelected;
@@ -105,21 +112,16 @@
         noises.forEach(noise => noise.control.stop());
     }
 
-    /**
-     * Fired when a registered command is activated using a keyboard shortcut.
-     * In this sample extension, there is only one registered command: "Ctrl+Shift+U".
-     * On Mac, this command will automatically be converted to "Command+Shift+U".
-     */
     browser.commands.onCommand.addListener((command) => {
         if (command === 'play-white-noise') {
-            play('White');
+            play('white');
         } else if (command === 'play-pink-noise') {
-            play('Pink');
+            play('pink');
         } else if (command === 'play-brown-noise') {
-            play('Brown');
+            play('brown');
         } else {
             stop();
         }
     });
 
-})(window.browser|| window.chrome);
+})(window.browser || window.chrome);
