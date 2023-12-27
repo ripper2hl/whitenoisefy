@@ -2,15 +2,15 @@
     'use strict';
     const BUFFER_SIZE = 8192;
     const noises = [{
-            name: 'White',
+            name: 'white',
             control: createNoiseGenerator('white')
         },
         {
-            name: 'Pink',
+            name: 'pink',
             control: createNoiseGenerator('pink')
         },
         {
-            name: 'Brown',
+            name: 'brown',
             control: createNoiseGenerator('brown')
         }
     ];
@@ -24,27 +24,26 @@
     }
 
     browser.runtime.onMessage.addListener(whitenoisefy);
-
-
+    
     function createNoiseGenerator(type, bufferSize = 8192) {
         let control = {};
         let audioContext = new window.AudioContext();
         let node = audioContext.createScriptProcessor(bufferSize, 1, 1);
     
-        let b0, b1, b2, b3, b4, b5, b6;
-        b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
-        let lastOut = 0.0;
+        let noiseFunction;
+    
+        if (type === 'white') {
+            noiseFunction = createWhiteNoiseGenerator();
+        } else if (type === 'pink') {
+            noiseFunction = createPinkNoiseGenerator();
+        } else if (type === 'brown') {
+            noiseFunction = createBrownNoiseGenerator();
+        }
     
         node.onaudioprocess = function (e) {
             const output = e.outputBuffer.getChannelData(0);
             for (let i = 0; i < bufferSize; i++) {
-                if (type === 'white') {
-                    output[i] = whiteNoise();
-                } else if (type === 'pink') {
-                    output[i] = pinkNoise();
-                } else if (type === 'brown') {
-                    output[i] = brownNoise();
-                }
+                output[i] = noiseFunction();
             }
         };
     
@@ -52,13 +51,19 @@
         control.stop = () => node.disconnect();
     
         return control;
-    
-        // Functions for different types of noise
-        function whiteNoise() {
+    }
+
+    function createWhiteNoiseGenerator() {
+        return function () {
             return Math.random() * 2 - 1;
-        }
+        };
+    }
     
-        function pinkNoise() {
+    function createPinkNoiseGenerator() {
+        let b0, b1, b2, b3, b4, b5, b6;
+        b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
+    
+        return function () {
             const white = Math.random() * 2 - 1;
             b0 = 0.99886 * b0 + white * 0.0555179;
             b1 = 0.99332 * b1 + white * 0.0750759;
@@ -69,15 +74,20 @@
             const pinkValue = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
             b6 = white * 0.115926;
             return pinkValue * 0.11; // (roughly) compensate for gain
-        }
+        };
+    }
     
-        function brownNoise() {
+    function createBrownNoiseGenerator() {
+        let lastOut = 0.0;
+    
+        return function () {
             const white = Math.random() * 2 - 1;
             const brownValue = (lastOut + (0.02 * white)) / 1.02;
             lastOut = brownValue;
             return brownValue * 3.5; // (roughly) compensate for gain
-        }
+        };
     }
+    
 
     function play(nameSound) {
         let soundSelected;
